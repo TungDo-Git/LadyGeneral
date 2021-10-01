@@ -8,11 +8,9 @@ Original file is located at
 
 #Task 1
 
-Tiếp theo, viết một chương trình cho phép người dùng nhập tên của một tệp. Cố gắng mở tệp được cung cấp để truy cập đọc. Nếu tệp tồn tại, bạn có thể in ra một thông báo xác nhận. Nếu tệp không tồn tại, bạn nên cho người dùng biết rằng không thể tìm thấy tệp và nhắc lại họ.
+CHo phép người dùng nhập tên của một tệp. Cố gắng mở tệp được cung cấp để truy cập đọc. Nếu tệp tồn tại, bạn có thể in ra một thông báo xác nhận. Nếu tệp không tồn tại, bạn nên cho người dùng biết rằng không thể tìm thấy tệp và nhắc lại họ.
 
-Sử dụng try/except để thực hiện việc này (đừng chỉ sử dụng một loạt câu lệnh “if” — chúng tôi muốn chương trình này càng “chung chung” càng tốt)
-
-#Task 1 result
+Sử dụng try/except để thực hiện việc này
 """
 
 while True:
@@ -29,21 +27,7 @@ while True:
 
 """#Task 2
 
-Tiếp theo, bạn sẽ cần phân tích dữ liệu có trong tệp bạn vừa mở để đảm bảo rằng nó ở đúng định dạng. Mỗi tệp dữ liệu chứa một loạt câu trả lời của học sinh ở định dạng sau:
-
-* N12345678,B,A,D,D,C,B,D,A,C,C,D,B,A,B,A,C,B,D,A,C,A,A,B,D,D
-hoặc
-
-* N12345678,B,,D,,C,B,,A,C,C,,B,A,B,A,,,,A,C,A,A,B,D,
-Giá trị đầu tiên là số ID của sinh viên. 25 chữ cái sau là câu trả lời của học sinh cho kỳ thi. Tất cả các giá trị được phân tách bằng dấu phẩy. Nếu không có chữ cái nào sau dấu phẩy, điều này có nghĩa là học sinh đã bỏ qua việc trả lời câu hỏi.
-Lưu ý rằng một số dòng dữ liệu có thể bị hỏng! Ví dụ: dòng dữ liệu này không có đủ câu trả lời:
-
-* N12345678,B,A,D,D,C,B
-
-Và dòng dữ liệu này có quá nhiều câu trả lời:
-
-* N12345678,B,A,D,D,C,B,D,A,C,C,D,B,A,B,A,C,B,D,A,C,A,A,B,D,D,A,B,C,D,E
-Nhiệm vụ của bạn cho phần này của chương trình là thực hiện như sau:
+Thực hiện như sau:
 
 1. Báo cáo tổng số dòng dữ liệu được lưu trữ trong tệp.
 2. Phân tích từng dòng và đảm bảo rằng nó là "hợp lệ".
@@ -51,11 +35,6 @@ Nhiệm vụ của bạn cho phần này của chương trình là thực hiện
   * N# cho một học sinh là mục đầu tiên trên dòng. Nó phải chứa ký tự “N” theo sau là 8 ký tự số.
 3. Nếu một dòng dữ liệu không hợp lệ, bạn nên báo cáo cho người dùng bằng cách in ra một thông báo lỗi. Bạn cũng nên đếm tổng số dòng dữ liệu hợp lệ trong tệp.
 
-*Gợi ý: Sử dụng phương pháp split để tách dữ liệu ra khỏi tệp. Bạn có thể cần sử dụng phương pháp này một vài lần cùng với một hoặc hai vòng lặp. Hãy suy nghĩ về thứ tự mà bạn cần chia các mục của mình. Ví dụ: tệp của bạn được sắp xếp sao cho hồ sơ của một học sinh chiếm toàn bộ dòng trong tệp. Việc tách trước khi ngắt dòng sẽ tách biệt dữ liệu của từng học sinh. Sau đó, bạn sẽ cần phải chia nhỏ từng mục dựa trên ký tự phân tách để rút ra câu trả lời cho từng học sinh.*
-
-Đây là một mẫu chạy chương trình của bạn cho hai tệp dữ liệu đầu tiên. Bạn có thể tìm thấy danh sách đầy đủ đầu ra dự kiến cho tất cả các tệp dữ liệu trong gói có thể tải xuống cho bài tập này.
-
-#Task 2 result
 """
 
 print("****ANALYZING****")
@@ -64,7 +43,7 @@ invalid_line = 0
 valid_answers = []
 for line in data:
   line_elements = line.split(",")
-  if (len(line_elements) != 26) or (line_elements[0][0] != "N") or (not line_elements[0][1:].isnumeric()) or (len(line_elements[0])!=9):
+  if (len(line_elements) != 26) or (line_elements[0][0] != "N") or (not line_elements[0][1:].isnumeric()) or (len(line_elements[0])!=9): # check for invalid condition at each line
     invalid_line += 1
     if (len(line_elements) != 26):
       print("Invalid line of data: does not contain exactly 26 values:")
@@ -72,7 +51,7 @@ for line in data:
       print("Invalid line of data: N# is invalid")
     print(line)
   else:
-    valid_answers.append(line)
+    valid_answers.append(line) #collect valid answer for further processing
 if not invalid_line:
     print("No errors found!")
 
@@ -82,25 +61,20 @@ print("Total invalid lines of data: {}".format(invalid_line))
 
 """#Task 3
 
-Tiếp theo, bạn sẽ viết một chương trình để chấm điểm các bài thi cho một phần nhất định. Kỳ thi gồm 25 câu hỏi, trắc nghiệm. Đây là một chuỗi đại diện cho các câu trả lời:
-
+Chấm điểm các bài thi cho một phần nhất định. Kỳ thi gồm 25 câu hỏi, trắc nghiệm. Đây là một chuỗi đại diện cho các câu trả lời:
 answer_key = "B,A,D,D,C,B,D,A,C,C,D,B,A,B,A,C,B,D,A,C,A,A,B,D,D"
-Chương trình của bạn nên sử dụng những câu trả lời này để tính điểm cho mỗi dòng dữ liệu hợp lệ. Điểm có thể được tính như sau:
 
+Tính điểm cho mỗi dòng dữ liệu hợp lệ. Điểm có thể được tính như sau:
 * +4 điểm cho mỗi câu trả lời đúng
 * 0 điểm cho mỗi câu trả lời bị bỏ qua
 * -1 điểm cho mỗi câu trả lời sai
-Bạn cũng sẽ muốn tính toán các thống kê sau cho toàn bộ lớp:
 
+Tính toán các thống kê sau cho toàn bộ lớp:
 * Điểm trung bình
 * Điểm cao nhất
 * Điểm thấp nhất
 * Miền giá trị của điểm (cao nhất trừ thấp nhất)
-* Giá trị trung vị (Sắp xếp các điểm theo thứ tự tăng dần. Nếu # học sinh là số lẻ, bạn có thể lấy giá trị nằm ở giữa của tất cả các điểm (tức là [0, 50, 100] — trung vị là 50). Nếu # học sinh là chẵn bạn có thể tính giá trị trung vị bằng cách lấy giá trị trung bình của hai giá trị giữa (tức là [0, 50, 60, 100] — giá trị trung vị là 55)).
-
-*Gợi ý: Khi đã cho điểm các học sinh, bạn nên sử dụng một list để lưu trữ điểm số của từng học sinh; sau đó bạn có thể tính toán số liệu thống kê sau khi đã kiểm tra mọi học sinh trong tệp.*
-
-#Task 3 result
+* Giá trị trung vị 
 """
 
 import numpy as np
@@ -108,16 +82,16 @@ import numpy as np
 students = []
 answers = []
 scores = []
-for line in valid_answers:
+for line in valid_answers: #iterate to separate student number from the answers
   elements = line.split(",")
   students.append(elements[0])
   answers.append(elements[1:])
 
 answer_keys = "B,A,D,D,C,B,D,A,C,C,D,B,A,B,A,C,B,D,A,C,A,A,B,D,D".split(",")
 
-for student, answer in zip(students, answers):
+for student, answer in zip(students, answers): #iterate through each pair of student and answer
   score = 0
-  for choice, key in zip(answer, answer_keys):
+  for choice, key in zip(answer, answer_keys): #iterate through each pair of choice and key to calculate the final score for each student
     if choice == "":
       score+=0
     elif choice == key:
@@ -146,13 +120,12 @@ print('Median score:', median_score)
 
 Cuối cùng, yêu cầu chương trình của bạn tạo một tệp “kết quả” chứa các kết quả chi tiết cho từng học sinh trong lớp của bạn. Mỗi dòng của tệp này phải chứa số ID của học sinh, dấu phẩy và sau đó là điểm của họ. Bạn nên đặt tên tệp này dựa trên tên tệp gốc được cung cấp — ví dụ: nếu người dùng muốn phân tích “class1.txt”, bạn nên lưu trữ kết quả trong tệp có tên “class1_grades.txt”.
 
-#Task 4 result
 """
 
 path_elements = path.split('.')
-result_path = path_elements[0] + '_grades.' + path_elements[1]
+result_path = path_elements[0] + '_grades.' + path_elements[1] #create path of the output file by inserting additional text
 with open(result_path, 'w+') as writefile:
-  for student, score in zip(students,scores):
+  for student, score in zip(students,scores): #iterrate through the pairs of student and score and write it into the output file
     writefile.write('{},{}\n'.format(student, score))
 
 with open(result_path, 'r') as file:
